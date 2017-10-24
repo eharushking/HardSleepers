@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">HardSleepers</string>
+
+    <string name="loading_prograss">Loading…</string>
+
+
+    <!-- Server Client ID.  This should be a valid Web OAuth 2.0 Client ID obtained
+         from https://console.developers.google.com/ -->
+    <string name="server_client_id">253299899084-tataa4dnaogig3b5ik96cdqeq4kvunkb.apps.googleusercontent.com</string>
+
+    <string name="userNameLoginLabel">Username:</string>
+    <string name="userNameLoginTextEdit">Email</string>
+    <string name="passwordLoginLabel">Password:</string>
+    <string name="passwordLoginTextEdit">Password</string>
+
+    <string name="self_login_button_text">Log In</string>
+    <string name="remember_me_check_box">Remember me</string>
+    <string name="please_login_label">Please login the system.</string>
+
+</resources>

@@ -1,0 +1,85 @@
+apply plugin: 'com.android.application'
+
+// Create a variable called keystorePropertiesFile, and initialize it to your
+// keystore.properties file, in the rootProject folder.
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+
+// Initialize a new Properties() object called keystoreProperties.
+def keystoreProperties = new Properties()
+
+// Load your keystore.properties file into the keystoreProperties object.
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.2"
+    signingConfigs {
+        debugConfig {
+            keyAlias keystoreProperties['debugKeyAlias']
+            keyPassword keystoreProperties['debugKeyPassword']
+            storeFile file(keystoreProperties['debugStoreFile'])
+            storePassword keystoreProperties['debugStorePassword']
+        }
+
+        releaseConfig {
+            keyAlias keystoreProperties['releaseKeyAlias']
+            keyPassword keystoreProperties['releaseKeyPassword']
+            storeFile file(keystoreProperties['releaseStoreFile'])
+            storePassword keystoreProperties['releaseStorePassword']
+        }
+    }
+    defaultConfig {
+        applicationId "com.eliya.harush.hardsleepers.app"
+        minSdkVersion 18
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.debugConfig
+    }
+    buildTypes {
+        release {
+            resValue "string", "API_KEY", "AIzaSyDyHw1toj0QHV128Z7Pcu_MxaODa-eNHEs"
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable false
+            signingConfig signingConfigs.releaseConfig
+            multiDexEnabled true
+        }
+        debug {
+            resValue "string", "API_KEY", "AIzaSyDyHw1toj0QHV128Z7Pcu_MxaODa-eNHEs"
+            debuggable true
+            renderscriptDebuggable true
+            signingConfig signingConfigs.debugConfig
+        }
+    }
+    packagingOptions {
+
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    productFlavors {
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    //noinspection GradleCompatible
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support:design:26.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.android.support:support-v4:26.1.0'
+    implementation 'com.android.support:gridlayout-v7:26.1.0'
+    // Testing Dependencies
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:testing-support-lib:0.1'
+    // Google API dependencies
+    implementation 'com.google.android.gms:play-services-auth:11.4.2'
+    implementation 'com.google.android.gms:play-services:11.4.2'
+}
+
+apply plugin: 'com.google.gms.google-services'
+
+
