@@ -2,9 +2,10 @@ package com.eliya.harush.hardsleepers.app.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -20,10 +21,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Scope;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 
 /**
  * Created by eliya.harush on 10/24/17.
@@ -34,9 +38,12 @@ public class LoginInActivity extends AppCompatActivity
 
     private static final String TAG = "LoginInActivity";
     private static final int RC_SIGN_IN = 9001;
+    private static final int RC_GET_TOKEN = 9002;
+
 
     private GoogleApiClient mGoogleApiClient;
-    private TextView mStatusTextView;
+
+    private TextView mStatusTextView, mUsername, mPassword;
     private ProgressDialog mProgressDialog;
 
 
@@ -45,22 +52,37 @@ public class LoginInActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        FloatingActionButton fabHelp = (FloatingActionButton) findViewById(R.id.fabHelp);
+        fabHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mStatusTextView = (TextView) findViewById(R.id.login_label);
+//        mStatusTextView = (TextView) findViewById(R.id.login_label);
+        mUsername = (TextView) findViewById(R.id.username);
+        mPassword = (TextView) findViewById(R.id.password);
 
         // Button listeners
         findViewById(R.id.google_sign_in_button).setOnClickListener(this);
+        findViewById(R.id.self_login_button).setOnClickListener(this);
 
         validateServerClientID();
 
+        String serverClientId = getString(R.string.server_client_id);
+        Log.d("serverClientId: ", serverClientId);
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(serverClientId)
                 .requestEmail()
                 .build();
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
+                .enableAutoManage(this , this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
@@ -99,11 +121,27 @@ public class LoginInActivity extends AppCompatActivity
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
+        if (requestCode == RC_GET_TOKEN) {
+            // [START get_id_token]
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            Log.d(TAG, "onActivityResult:GET_TOKEN:success:" + result.getStatus().isSuccess());
+
+            if (result.isSuccess()) {
+                String idToken = result.getSignInAccount().getIdToken();
+                Log.d("idToken", idToken);
+
+                Toast.makeText(this, "TRUE!!!!!", Toast.LENGTH_LONG).show();
+            }
+            // [END get_id_token]
+
             handleSignInResult(result);
         }
+
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+//        if (requestCode == RC_SIGN_IN) {
+//            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+//            handleSignInResult(result);
+//        }
     }
 
     @Override
@@ -112,6 +150,10 @@ public class LoginInActivity extends AppCompatActivity
             case R.id.google_sign_in_button:
                 googleSignIn();
                 break;
+            case R.id.self_login_button:{
+                Toast.makeText(getApplicationContext(), R.string.coming_soon_notice,Toast.LENGTH_LONG).show();
+                break;
+            }
         }
     }
 
@@ -130,10 +172,16 @@ public class LoginInActivity extends AppCompatActivity
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        hideProgressDialog();
+    }
+
     private void validateServerClientID() {
         String serverClientId = getString(R.string.server_client_id);
         String suffix = ".apps.googleusercontent.com";
-        Log.d(TAG, serverClientId);
+        Log.d(TAG, "serverClientId: ->> "+serverClientId);
         if (!serverClientId.trim().endsWith(suffix)) {
             String message = "Invalid server client ID in strings.xml, must end with " + suffix;
 
@@ -143,19 +191,35 @@ public class LoginInActivity extends AppCompatActivity
     }
 
     private void handleSignInResult(GoogleSignInResult result) {
-        Log.d(TAG, "handleSignInResult: " + result.isSuccess());
+        if (result.isSuccess()) {
+            String idToken = result.getSignInAccount().getIdToken();
+//            mIdTokenTextView.setText(getString(R.string.id_token_fmt, idToken));
+            Log.d(TAG, "handleSignInResult: " + result.isSuccess());
+//            updateUI(true);
+        } else {
+            Log.d(TAG, "handleSignInResult: " + result.isSuccess());
+//            updateUI(false);
+        }
+
+
+
+
+
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
 //            mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
             // Views inside NavigationView's header
-
+            String msg= acct.getDisplayName()+" "+ acct.getEmail() +" "+ acct.getServerAuthCode();
+            Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_LONG).show();
         }
     }
 
     private void googleSignIn() {
+//        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+//        startActivityForResult(signInIntent, RC_SIGN_IN);
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-        startActivityForResult(signInIntent, RC_SIGN_IN);
+        startActivityForResult(signInIntent, RC_GET_TOKEN);
     }
 
     private void showProgressDialog() {
