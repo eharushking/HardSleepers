@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login_grid_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.LoginInActivity"
+    tools:layout_editor_absoluteY="81dp"
+    tools:showIn="@layout/hardsleepers_app_bar_main">
+
+
+    <!--<TextView-->
+    <!--android:id="@+id/login_label"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="@string/please_login_label"-->
+    <!--android:visibility="visible"-->
+    <!--app:layout_constraintBottom_toTopOf="parent"-->
+    <!--app:layout_constraintEnd_toStartOf="parent"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent" />-->
+
+
+    <!--<LinearLayout-->
+    <!--android:id="@+id/vertical_layout1"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="vertical"-->
+    <!--android:visibility="visible"-->
+    <!--app:layout_constraintBottom_toTopOf="parent"-->
+    <!--app:layout_constraintEnd_toStartOf="parent"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent">-->
+
+    <!--</LinearLayout>-->
+
+
+    <android.support.constraint.Guideline
+        android:id="@+id/vertical_guideline_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/vertical_guideline_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        app:layout_constraintGuide_percent="0.95" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/horizontal_guideline_begin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="invisible"
+        app:layout_constraintGuide_percent="0.02" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/horizontal_guideline_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="invisible"
+        app:layout_constraintGuide_percent="0.95" />
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:inputType="none"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/password"
+        app:layout_constraintEnd_toStartOf="@+id/vertical_guideline_right"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/vertical_guideline_left"
+        app:layout_constraintTop_toTopOf="@+id/horizontal_guideline_begin"
+        app:layout_constraintVertical_bias="0.0"
+        android:text="@string/userNameLoginLabel" />
+
+    <EditText
+        android:id="@+id/usernameTextEdit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:ems="15"
+        android:hint="@string/userNameLoginTextEdit"
+        android:inputType="textEmailAddress"
+        app:layout_constraintBottom_toTopOf="@+id/guideline1"
+        app:layout_constraintDimensionRatio=""
+        app:layout_constraintEnd_toStartOf="@+id/vertical_guideline_right"
+        app:layout_constraintStart_toStartOf="@+id/vertical_guideline_left"
+        app:layout_constraintTop_toBottomOf="@+id/username" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@id/usernameTextEdit"
+        app:layout_constraintGuide_percent="0.2" />
+
+    <TextView
+        android:id="@+id/password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintEnd_toStartOf="@+id/vertical_guideline_right"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/vertical_guideline_left"
+        app:layout_constraintTop_toTopOf="@+id/guideline1"
+        app:layout_constraintVertical_bias="0.0"
+        android:text="@string/passwordLoginLabel" />
+
+    <EditText
+        android:id="@+id/passwordTextEdit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:hint="@string/passwordLoginTextEdit"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintEnd_toStartOf="@+id/vertical_guideline_right"
+        app:layout_constraintStart_toStartOf="@+id/vertical_guideline_left"
+        app:layout_constraintTop_toBottomOf="@+id/password" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@id/passwordTextEdit"
+        app:layout_constraintGuide_percent="0.4" />
+
+
+    <Button
+        android:id="@+id/self_login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/self_login_button_text"
+        app:layout_constraintBaseline_toBaselineOf="@+id/rememberMe_checkBox"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.08"
+        app:layout_constraintStart_toStartOf="@+id/vertical_guideline_left" />
+
+    <CheckBox
+        android:id="@+id/rememberMe_checkBox"
+        style="@style/Widget.AppCompat.CompoundButton.CheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/remember_me_check_box"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/google_sign_in_button"
+        app:layout_constraintEnd_toStartOf="@+id/vertical_guideline_right"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/self_login_button"
+        app:layout_constraintTop_toTopOf="@+id/guideline2"
+        app:layout_constraintVertical_bias="0.0" />
+
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/google_sign_in_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/horizontal_guideline_end"
+        app:layout_constraintEnd_toStartOf="@+id/vertical_guideline_right"
+        app:layout_constraintStart_toStartOf="@+id/vertical_guideline_left"
+        app:layout_constraintTop_toBottomOf="@+id/self_login_button"
+        app:layout_constraintVertical_bias="0.18" />
+
+    <!--<LinearLayout-->
+    <!--android:id="@+id/horizontal_layout1"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:gravity="fill_horizontal"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:visibility="visible"-->
+    <!--app:layout_constraintBottom_toTopOf="parent"-->
+    <!--app:layout_constraintEnd_toStartOf="parent"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent" />-->
+
+    <!--<com.google.android.gms.common.SignInButton-->
+    <!--android:id="@+id/other_sign_in_button"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:visibility="gone"-->
+    <!--app:layout_constraintBottom_toTopOf="parent"-->
+    <!--app:layout_constraintEnd_toStartOf="parent"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent" />-->
+
+
+    <!--<com.facebook.login.widget.LoginButton-->
+    <!--android:id="@+id/facebook_login_button"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_column="2"-->
+    <!--android:layout_gravity="center_vertical"-->
+    <!--android:layout_row="0"-->
+    <!--android:visibility="visible" />-->
+
+
+    <!--<Button-->
+    <!--android:id="@+id/sign_out_button"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_column="0"-->
+    <!--android:layout_row="1"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:paddingLeft="16dp"-->
+    <!--android:paddingRight="16dp"-->
+    <!--android:visibility="gone"-->
+    <!--tools:visibility="visible"-->
+    <!--android:text="@string/sign_out" />-->
+
+
+</android.support.constraint.ConstraintLayout>
